@@ -1,0 +1,5 @@
+body { font-family: system-ui; margin: 24px; }
+#todo { padding: 0; list-style: none; max-width: 420px; }
+#todo li { display:flex; align-items:center; gap:8px; padding:8px 12px; border:1px solid #eee; border-radius:8px; margin-bottom:8px; cursor:pointer; }
+#todo li.bought { text-decoration: line-through; opacity: 0.6; }
+#todo li .remove { margin-left:auto; opacity:.5; }
