@@ -1,0 +1,24 @@
+# зависимости
+**/node_modules/
+**/pnpm-lock.yaml
+**/yarn.lock
+**/package-lock.json
+
+# сборки/артефакты
+**/dist/
+**/build/
+**/.parcel-cache/
+**/.next/
+**/.vite/
+
+# тесты/coverage
+**/coverage/
+
+# env
+**/.env
+**/.env.*
+!.env.example  # если есть шаблон
+
+# системные
+.DS_Store
+Thumbs.db
