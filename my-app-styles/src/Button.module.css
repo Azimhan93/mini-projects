@@ -1,0 +1,9 @@
+.disabled {
+    background: #e20b0b;
+    color: #fff;
+    padding: 10px 14px;
+    border-radius: 10px;
+    border: 0;
+    cursor: pointer;
+}
+.disabled:hover { background: #720505; }

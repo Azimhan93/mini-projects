@@ -308,7 +308,7 @@ export default function UserList() {
   );
 } */
 
-import { useState, useEffect } from "react";
+/* import { useState, useEffect } from "react";
 
 export default function ProductCatalog() {
   const [products, setProducts] = useState([]);
@@ -424,6 +424,297 @@ export default function ProductCatalog() {
                   </li>
                 ))}
               </ul>
+
+              <div style={{ display: "flex", gap: 8, alignItems: "center" }}>
+                <button
+                  onClick={() => setPage(p => Math.max(1, p - 1))}
+                  disabled={clampedPage <= 1}
+                >
+                  ← Prev
+                </button>
+                <span>
+                  {start + 1}–{Math.min(start + PER_PAGE, filtered.length)} of {filtered.length}
+                </span>
+                <button
+                  onClick={() => setPage(p => Math.min(totalPages, p + 1))}
+                  disabled={clampedPage >= totalPages}
+                >
+                  Next →
+                </button>
+              </div>
+            </>
+          )}
+        </>
+      )}
+    </div>
+  );
+} */
+
+/* import { useState, useEffect } from "react";
+
+export default function BooksCatalog() {
+  const [books, setBooks] = useState([]);
+  const [query, setQuery] = useState("");
+  const [page, setPage] = useState(1);
+  const [loading, setLoading] = useState(false);
+  const [error, setError] = useState("");
+
+  useEffect(() => {
+    const controller = new AbortController();
+    const timeoutId = setTimeout(() => controller.abort(), 8000);
+
+    async function fetchBooks() {
+      try {
+        setLoading(true);
+        setError("");
+        const res = await fetch("https://openlibrary.org/subjects/fantasy.json?limit=50", {
+          signal: controller.signal,
+        });
+        if (!res.ok) throw new Error(`HTTP ${res.status}`);
+        const data = await res.json();
+        setBooks(data.works);
+      } catch (e) {
+        if (e.name !== "AbortError") setError(e.message || "Unknown error");
+      } finally {
+        setLoading(false);
+      }
+    }
+    fetchBooks();
+    return () => {
+      clearTimeout(timeoutId);
+      controller.abort();
+    };
+  }, []);
+
+  const q = query.trim().toLowerCase();
+  const filtered = books.filter(b => b.title.toLowerCase().includes(q));
+  
+
+  const PER_PAGE = 5;
+  const totalPages = Math.max(1, Math.ceil(filtered.length / PER_PAGE));
+  const clampedPage = Math.min(page, totalPages);
+  const start = (clampedPage - 1) * PER_PAGE;
+  const pageItems = filtered.slice(start, start + PER_PAGE);
+
+  useEffect(() => {
+      setPage(1);
+  }, [q]);
+
+  return (
+    <div style={{ padding: 20, maxWidth: 720 }}>
+      <h1>📝 Books Catalog</h1>
+
+      <label htmlFor="search" style={{ display: "block", marginBottom: 6 }}>
+        Search by title of the book
+      </label>
+      <input
+        id="search"
+        value={query}
+        onChange={e => setQuery(e.target.value)}
+        placeholder="Search title..."
+        style={{ marginBottom: 12, width: "100%", maxWidth: 420 }}
+      />
+
+      {loading && <p>⏳ Loading…</p>}
+      {error && (
+        <p role="alert" style={{ color: "crimson" }}>
+          ⚠️ {error}
+        </p>
+      )}
+
+      {!loading && !error && (
+        <>
+          <p style={{ opacity: 0.7 }}>
+            Found {filtered.length} of {books.length}
+            {filtered.length > 0 && (
+              <> — Page {clampedPage} of {totalPages}</>
+            )}
+          </p>
+
+          {filtered.length === 0 ? (
+            <p>No results</p>
+          ) : (
+            <>
+              <ul style={{ lineHeight: 1.5, padding: 0, listStyle: "none" }}>
+                {pageItems.map(p => (
+                  <li
+                  key={p.key}
+                  style={{
+                    display: "grid",
+                    gridTemplateColumns: "80px 1fr",
+                    gap: 12,
+                    padding: 12,
+                    border: "1px solid #eee",
+                    borderRadius: 10,
+                    marginBottom: 10
+                  }}
+                >
+                  {p.cover_id ? (
+                    <img
+                      src={`https://covers.openlibrary.org/b/id/${p.cover_id}-S.jpg`}
+                      alt={p.title}
+                      width={80}
+                      height={80}
+                      style={{ objectFit: "cover", borderRadius: 6 }}
+                    />
+                  ) : (
+                    <div style={{
+                      width: 80, height: 80, borderRadius: 6, background: "#f2f2f2",
+                      display: "flex", alignItems: "center", justifyContent: "center", fontSize: 12, color: "#888"
+                    }}>No cover</div>
+                  )}
+                
+                  <div>
+                    <div style={{ fontWeight: 600 }}>{p.title}</div>
+                    <div style={{ opacity: 0.8 }}>
+                      {p.authors?.[0]?.name ?? "Unknown author"}
+                      {p.first_publish_year ? ` • ${p.first_publish_year}` : ""}
+                    </div>
+                    <a
+                      href={`https://openlibrary.org${p.key}`}
+                      target="_blank"
+                      rel="noreferrer"
+                      style={{ display: "inline-block", marginTop: 6 }}
+                    >
+                      Details →
+                    </a>
+                  </div>
+                </li>
+                ))}
+              </ul>
+
+              <div style={{ display: "flex", gap: 8, alignItems: "center" }}>
+                <button
+                  onClick={() => setPage(p => Math.max(1, p - 1))}
+                  disabled={clampedPage <= 1}
+                >
+                  ← Prev
+                </button>
+                <span>
+                  {start + 1}–{Math.min(start + PER_PAGE, filtered.length)} of {filtered.length}
+                </span>
+                <button
+                  onClick={() => setPage(p => Math.min(totalPages, p + 1))}
+                  disabled={clampedPage >= totalPages}
+                >
+                  Next →
+                </button>
+              </div>
+            </>
+          )}
+        </>
+      )}
+    </div>
+  );
+} */
+
+import { useState, useEffect } from "react";
+
+export default function MovieCatalog() {
+  const [movies, setMovies] = useState([]);
+  const [query, setQuery] = useState("");
+  const [page, setPage] = useState(1);
+  const [loading, setLoading] = useState(false);
+  const [error, setError] = useState("");
+
+  useEffect(() => {
+    const controller = new AbortController();
+    const timeoutId = setTimeout(() => controller.abort(), 8000);
+
+    async function fetchMovies() {
+      try {
+        setLoading(true);
+        setError("");
+        const res = await fetch("https://imdb.iamidiotareyoutoo.com/search?q=Spiderman", {
+          signal: controller.signal,
+        });
+        if (!res.ok) throw new Error(`HTTP ${res.status}`);
+        const data = await res.json();
+        setMovies(data.results || []);
+      } catch (e) {
+        if (e.name !== "AbortError") setError(e.message || "Unknown error");
+      } finally {
+        setLoading(false);
+      }
+    }
+    fetchMovies();
+    return () => {
+      clearTimeout(timeoutId);
+      controller.abort();
+    };
+  }, []);
+
+  const q = query.trim().toLowerCase();
+  const filtered = movies.filter(m =>
+    m["#TITLE"].toLowerCase().includes(q)
+  );
+  
+
+  const PER_PAGE = 4;
+  const totalPages = Math.max(1, Math.ceil(filtered.length / PER_PAGE));
+  const clampedPage = Math.min(page, totalPages);
+  const start = (clampedPage - 1) * PER_PAGE;
+  const pageItems = filtered.slice(start, start + PER_PAGE);
+
+  useEffect(() => {
+      setPage(1);
+  }, [q]);
+
+  return (
+    <div style={{ padding: 20, maxWidth: 720 }}>
+      <h1>Movies Catalog</h1>
+
+      <label htmlFor="search" style={{ display: "block", marginBottom: 6 }}>
+        Search by title of the movie
+      </label>
+      <input
+        id="search"
+        value={query}
+        onChange={e => setQuery(e.target.value)}
+        placeholder="Search title..."
+        style={{ marginBottom: 12, width: "100%", maxWidth: 420 }}
+      />
+
+      {loading && <p>⏳ Loading…</p>}
+      {error && (
+        <p role="alert" style={{ color: "crimson" }}>
+          ⚠️ {error}
+        </p>
+      )}
+
+      {!loading && !error && (
+        <>
+          <p style={{ opacity: 0.7 }}>
+            Found {filtered.length} of {movies.length}
+            {filtered.length > 0 && (
+              <> — Page {clampedPage} of {totalPages}</>
+            )}
+          </p>
+
+          {filtered.length === 0 ? (
+            <p>No results</p>
+          ) : (
+            <>
+         
+          <ul>
+              {pageItems.map((m, i) => (
+                <li key={m["#IMDB_ID"] || m.id || i} style={{ marginBottom: 12 }}>
+                  <b>{m["#TITLE"] ?? "Untitled"}</b> ({m["#YEAR"] ?? "—"})
+                  <br />
+                  {m["#IMG_POSTER"] ? (
+                    <img src={m["#IMG_POSTER"]} alt={m["#TITLE"] || "poster"} width={120} />
+                  ) : (
+                    <div style={{
+                      width: 120, height: 170, background: "#eee",
+                      display: "inline-flex", alignItems: "center", justifyContent: "center",
+                      color: "#888", fontSize: 12, borderRadius: 6
+                    }}>
+                      No poster
+                    </div>
+                  )}
+                </li>
+              ))}
+            </ul>
 
               <div style={{ display: "flex", gap: 8, alignItems: "center" }}>
                 <button
